@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight, ClipboardCheck, Compass, FileText, ServerCog } from "lucide-react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import ThemeToggle from "../ThemeToggle";
-import SidebarItem from "./SIdebarItem";
+import SidebarItem from "./SidebarItem";
 
 interface SidebarProps {
    isOpen: boolean;

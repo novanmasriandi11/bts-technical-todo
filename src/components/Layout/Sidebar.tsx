@@ -21,7 +21,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
       >
          <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-800">
             {isOpen && (
-               <h1 className="text-xl font-bold tracking-wide text-gray-800 dark:text-white">Wide Task</h1>
+               <h1 className="text-xl font-bold tracking-wide text-gray-800 dark:text-white">Notes</h1>
             )}
 
             <button

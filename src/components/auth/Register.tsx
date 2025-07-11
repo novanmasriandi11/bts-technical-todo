@@ -1,47 +1,54 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
 import * as Yup from "yup";
+import { register as apiRegister } from "../../api/auth";
 import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from "formik";
 
-interface LoginFromValues {
+interface RegisterFormValues {
    username: string;
+   email: string;
    password: string;
 }
 
 const validationSchema = Yup.object().shape({
-   username: Yup.string().required("Username is required"),
-   password: Yup.string().required("Password is required"),
-})
+   username: Yup.string()
+      .required('Username is required')
+      .min(3, 'Username must be at least 3 characters long'),
+   email: Yup.string()
+      .email('Invalid email address')
+      .required('Email is required'),
+   password: Yup.string()
+      .required('Password is required')
+});
 
-export default function Login() {
-   const { login } = useAuth();
+export default function Register() {
    const navigate = useNavigate();
 
-   const initialValues: LoginFromValues = {
+   const initialValues: RegisterFormValues = {
       username: "",
+      email: "",
       password: "",
-   };
+   }
 
    const handleSubmit = async (
-      values: LoginFromValues,
-      actions: FormikHelpers<LoginFromValues>
+      values: RegisterFormValues,
+      actions: FormikHelpers<RegisterFormValues>
    ) => {
       actions.setStatus(undefined);
       try {
-         await login(values);
-         navigate("/");
+         await apiRegister(values);
+         navigate("/login");
       } catch (error: unknown) {
          const message = error instanceof Error ? error.message : "An unexpected error occurred";
-         actions.setStatus(message);
+         actions.setStatus({ error: message });
       } finally {
          actions.setSubmitting(false);
       }
    };
 
    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
-         <div className="w-full max-w-sm rounded-xl bg-white p-6 shadow-lg">
-            <h1 className="mb-4 text-center text-2xl font-bold">Login</h1>
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900 dark:text-gray-200">
+         <div className="w-full max-w-sm rounded-xl bg-white p-6 shadow-lg dark:bg-gray-800 dark:shadow-gray-700 dark:border dark:border-gray-700 dark:text-gray-200">
+            <h1 className="mb-4 text-center text-2xl font-bold">Register</h1>
 
             <Formik
                initialValues={initialValues}
@@ -58,10 +65,24 @@ export default function Login() {
 
                      <div>
                         <Field
+                           name="username"
+                           type="text"
+                           placeholder="Username"
+                           className="w-full rounded border px-3 py-2 dark:bg-gray-700 dark:text-gray-200"
+                        />
+                        <ErrorMessage
+                           name="username"
+                           component="div"
+                           className="mt-1 text-sm text-red-600"
+                        />
+                     </div>
+
+                     <div>
+                        <Field
                            name="email"
                            type="email"
                            placeholder="Email"
-                           className="w-full rounded border px-3 py-2"
+                           className="w-full rounded border px-3 py-2 dark:bg-gray-700 dark:text-gray-200"
                         />
                         <ErrorMessage
                            name="email"
@@ -75,7 +96,7 @@ export default function Login() {
                            name="password"
                            type="password"
                            placeholder="Password"
-                           className="w-full rounded border px-3 py-2"
+                           className="w-full rounded border px-3 py-2 dark:bg-gray-700 dark:text-gray-200"
                         />
                         <ErrorMessage
                            name="password"
@@ -87,14 +108,14 @@ export default function Login() {
                      <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                        className="w-full rounded bg-green-600 px-4 py-2 font-medium text-white hover:bg-green-700 disabled:opacity-50"
                      >
-                        {isSubmitting ? 'Logged in...' : 'Login'}
+                        {isSubmitting ? "Registering..." : "Register"}
                      </button>
                   </Form>
                )}
             </Formik>
          </div>
       </div>
-   )
+   );
 }

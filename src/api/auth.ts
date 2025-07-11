@@ -7,15 +7,15 @@ export interface AuthCredentials {
 
 export type LoginPayload    = AuthCredentials;
 export type RegisterPayload = AuthCredentials & { email: string };
-export interface AuthReponse<T> {
+export interface ApiReponse<T> {
    statusCode: number;
    message: string;
    errorMessage: string | null;
    data: T;
 }
 
-export type LoginResponse    = AuthReponse<{ token: string }>;
-export type RegisterResponse = AuthReponse<null>;
+export type LoginResponse    = ApiReponse<{ token: string }>;
+export type RegisterResponse = ApiReponse<null>;
 
 const ACCESS_KEY = "access_token";
 

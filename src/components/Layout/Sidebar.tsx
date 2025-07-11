@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, ClipboardCheck, Compass, FileText, ServerCog } from "lucide-react";
+import { ChevronLeft, ChevronRight, ClipboardCheck } from "lucide-react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import ThemeToggle from "../ThemeToggle";
 import SidebarItem from "./SidebarItem";
@@ -42,27 +42,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
             <nav className="space-y-1">
                <SidebarItem
                   icon={ClipboardCheck}
-                  title="Task Counter"
-                  path="/number-counter"
-                  isCollapsed={!isOpen}
-               />
-               <SidebarItem
-                  icon={FileText}
-                  title="Form"
-                  path="/form-handling"
-                  isCollapsed={!isOpen}
-               />
-               <SidebarItem
-                  icon={ServerCog}
-                  title="API Integration"
-                  path="/api-integration"
-                  isCollapsed={!isOpen}
-               />
-               <SidebarItem
-                  icon={Compass}
-                  title="Task Navigation"
-                  path={"/home"}
-                  extraPaths={["/about"]}
+                  title="Notes"
+                  path="/notes"
                   isCollapsed={!isOpen}
                />
             </nav>
